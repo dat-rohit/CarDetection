@@ -1,0 +1,4 @@
+Pillow 9.0 #pip install pillow
+opencv-python 4.5 #pip install opencv-python
+tensorflow 2.8 #pip install tensorflow
+
