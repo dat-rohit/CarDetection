@@ -1,6 +1,8 @@
 Pillow 9.0 #pip install pillow
 opencv-python 4.5 #pip install opencv-python
 tensorflow 2.8 #pip install tensorflow
+matplotlib
+numpy
 
 wget https://pjreddie.com/media/files/yolov3.weights #needed to run with the terminal in the Project folder
 si le wget ne télécharge pas le fichier yolov3.weights dans le dossier Project, alors :
