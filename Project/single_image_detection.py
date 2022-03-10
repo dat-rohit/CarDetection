@@ -1,4 +1,5 @@
 #imports
+from ast import IsNot
 from dis import dis
 import os
 from unicodedata import name
@@ -24,6 +25,9 @@ from Model import YOLOv3
 from tensorflow.keras.layers import Input
 from WeightsReader import WeightReader
 
+fig = plt.figure(figsize=(12, 12))
+axis = fig.add_subplot()
+
 #global variables
 
 # IoU Threshold
@@ -44,12 +48,27 @@ anchors = [ [[116, 90], [156, 198], [373, 326]],
 NUM_CLASS = 80
 
 
-# create Yolo model
+global model
+global graph
 
-model = YOLOv3(Input(shape=(None, None, 3)), NUM_CLASS);    
-#model.summary()
-# load the weights trained on COCO into the model
-WeightReader("./yolov3.weights").load_weights(model)
+#graph=tf.get_default_graph()
+
+#session = tf.Session()
+#set_session(session)
+
+# create Yolo model
+@st.cache(hash_funcs={"MyUnhashableClass": lambda _: None},allow_output_mutation=True)
+def load_model():
+    model = YOLOv3(Input(shape=(None, None, 3)), NUM_CLASS);    
+    #model.summary()
+    # load the weights trained on COCO into the model
+    WeightReader("./yolov3.weights").load_weights(model)
+    return model
+
+
+
+model=load_model()
+#model._make_predict_function()
 
 
 #define labels
@@ -168,7 +187,7 @@ def ApplyModel(output):
     selected_boxes = tf.gather(boxes, selected_indices)
     selected_classes = tf.gather(classes, selected_indices)
     
-
+    return selected_indices, selected_scores, selected_boxes, selected_classes
 
 def delimit_image(image):
     color_1 = np.array(image)
@@ -191,17 +210,19 @@ def delimit_image(image):
 def try_for_one_image(image):
 
     input = preprocess_image(image, net_h, net_w)
+    #with graph.as_default():
     output = model.predict(input)
     image_h, image_w, _ = image.shape
     selected_indices, selected_scores, selected_boxes, selected_classes = ApplyModel(output)
-    image, list_start, list_end, list_label = draw_boxes(a, selected_boxes,selected_classes, selected_scores, image_w, image_h, net_w, net_h)
+    image, list_start, list_end, list_label = draw_boxes(image, selected_boxes,selected_classes, selected_scores, image_w, image_h, net_w, net_h)
     if len(list_label) > 1 :
             maxi = np.argmax(list_label)
             list_start[0] = list_start[maxi]
             list_end[0] = list_end[maxi]
-            fig = plt.figure(figsize=(12, 12))
-            axis = fig.add_subplot()
+            #fig = plt.figure(figsize=(12, 12))
+            #axis = fig.add_subplot()
             case_coordonnee = np.array([list_start[0][0], list_end[0][0], list_start[0][1], list_end[0][1]])
+            image = np.ascontiguousarray(image, dtype=np.uint8)
             cv2.rectangle(image, list_start[0], list_end[0], color=(0, 255, 0))    #ajouter ,3     
             cv2.putText(image, "car", (list_start[0][0], list_start[0][1] - 10), 
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, 
@@ -210,36 +231,58 @@ def try_for_one_image(image):
     else :
         if (list_start[0][0]==-math.pi) and (list_start[0][1]==-math.pi):
             print('there is no car')
-        else :
-            fig = plt.figure(figsize=(12, 12))
-            axis = fig.add_subplot()
+        else :  
+            #fig = plt.figure(figsize=(12, 12))
+            #axis = fig.add_subplot()
             case_coordonnee = np.array([list_start[0][0], list_end[0][0], list_start[0][1], list_end[0][1]])
             cv2.rectangle(image, list_start[0], list_end[0], color=(0, 255, 0)) #ajouter ,3         
             cv2.putText(image, "car", (list_start[0][0], list_start[0][1] - 10), 
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, 
                         (0,0,0), 2)
     
-    plt.imshow(delimit_image(image))   
-    plt.show()
-    return
+    #plt.imshow(delimit_image(image))   
+    #plt.show()
+    final_img=delimit_image(image)
+    return final_img
 
 
 
 
 #Takes the image path as an input and returns the plotted image with bounding boxes
 def detect_cars(image):
-    img=Image.open(image)
+    #img=Image.open(image)
+    print("detect cars okkkk")
+    img=image
     img=resizeimage.resize_contain(img, [400, 250])
     val=np.array(img,dtype=np.uint8)
     image=val[:,:,[0,1,2]]
-    try_for_one_image(image)
+    final_img = try_for_one_image(image)
+    return final_img
 
 
+
+st.header("Detect a car")
 
 #Build the streamlit front end page
 def display_front():
-    st.write("hello")
+    file_uploaded=st.file_uploader("Choose file", type=["png","jpg","jpeg"])
+    
+    if file_uploaded is not None:
+        #final_img=detect_cars(image=file_uploaded)
+        #plt.imshow(final_img)
+        #plt.axis("off")
+        #st.pyplot(fig)
+        #st.write("this is a car")
+        image = Image.open(file_uploaded)
+        print("okkkkkkkkkk")
+        final_img=detect_cars(image=image)
+        print("diube OKKKKKK")
+        plt.imshow(final_img)
+        plt.axis("off")
+        st.pyplot(fig)
 
+    st.write("ok test")
+ 
 
 
 def main():
