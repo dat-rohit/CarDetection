@@ -1,10 +1,8 @@
-Pillow 9.0 #pip install pillow
-opencv-python 4.5 #pip install opencv-python
-tensorflow 2.8 #pip install tensorflow
-matplotlib
+Pillow==9.0.0
+opencv-python==4.5 
+tensorflow==2.8 
+matplotlib==3.5.1
 numpy
-
-wget https://pjreddie.com/media/files/yolov3.weights #needed to run with the terminal in the Project folder
-si le wget ne télécharge pas le fichier yolov3.weights dans le dossier Project, alors :
-lancer cette page web https://pjreddie.com/media/files/yolov3.weights
-puis déplacer le fichier téléchargé Téléchargements -> HackathonHiParis/Project
+streamlit==1.7.0
+pandas=1.3.5
+python-resize-image==1.1.20

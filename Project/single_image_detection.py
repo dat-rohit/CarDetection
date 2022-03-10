@@ -213,8 +213,8 @@ def delimit_image(image):
     
     return image[pos1[0]:pos2[0]+1, pos1[1]:pos2[1]+1,: ]
 
-def try_for_one_image(image):
 
+def try_for_one_image(image):
     input = preprocess_image(image, net_h, net_w)
     #with graph.as_default():
     output = model.predict(input)
@@ -252,7 +252,7 @@ def try_for_one_image(image):
     return final_img
 
 
-
+#TODO: try_for_one_image() doit renvoyer isCarDetected, final_img, proba_prediction
 
 #Takes the image path as an input and returns the plotted image with bounding boxes
 def detect_cars(image):
@@ -284,20 +284,23 @@ def display_front():
             image = Image.open(file_uploaded)
             print("okkkkkkkkkk")
             final_img=detect_cars(image=image)
-            print("diube OKKKKKK")
+            print("diube OKKKKKK")  
 
-        st.success("File uploaded ✅")
+        st.info("File uploaded ✅")
+        
+        #st.success("A car was detected with [INSERER PROBA] confidence")
         plt.imshow(final_img)
         plt.axis("off")
         st.pyplot(fig)
         #st.write("") #ECRIRE PROBA DE PREDICTION
+        
     
     st.markdown("Developed with ❤️ by [@tdanielou](%s)" % url_theo + ", [@dat_rohit](%s)" % url_rohit + ", [@tjaneau](%s)" % url_thibault  + ", [@rammalnour](%s)" % url_nour)
 
 
  
 
-
+    
 def main():
     display_front()
 
