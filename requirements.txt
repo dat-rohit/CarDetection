@@ -4,5 +4,5 @@ tensorflow==2.8
 matplotlib==3.5.1
 numpy
 streamlit==1.7.0
-pandas=1.3.5
+pandas==1.3.5
 python-resize-image==1.1.20
