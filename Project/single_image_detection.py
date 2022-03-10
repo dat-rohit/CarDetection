@@ -25,6 +25,12 @@ from Model import YOLOv3
 from tensorflow.keras.layers import Input
 from WeightsReader import WeightReader
 
+
+url_rohit="https://github.com/dat-rohit"
+url_theo="https://github.com/tdanielou"
+url_nour="https://github.com/rammalnour"
+url_thibault=""
+
 fig = plt.figure(figsize=(12, 12))
 axis = fig.add_subplot()
 
@@ -261,27 +267,34 @@ def detect_cars(image):
 
 
 
-st.header("Detect a car")
+st.title("Detect a car")
 
 #Build the streamlit front end page
 def display_front():
-    file_uploaded=st.file_uploader("Choose file", type=["png","jpg","jpeg"])
-    
+    file_uploaded=st.file_uploader("Upload an image", type=["png","jpg","jpeg"])
     if file_uploaded is not None:
         #final_img=detect_cars(image=file_uploaded)
         #plt.imshow(final_img)
         #plt.axis("off")
         #st.pyplot(fig)
         #st.write("this is a car")
-        image = Image.open(file_uploaded)
-        print("okkkkkkkkkk")
-        final_img=detect_cars(image=image)
-        print("diube OKKKKKK")
+
+        with st.spinner('Wait for it... ⌛'):
+
+            image = Image.open(file_uploaded)
+            print("okkkkkkkkkk")
+            final_img=detect_cars(image=image)
+            print("diube OKKKKKK")
+
+        st.success("File uploaded ✅")
         plt.imshow(final_img)
         plt.axis("off")
         st.pyplot(fig)
+        #st.write("") #ECRIRE PROBA DE PREDICTION
+    
+    st.markdown("Developed with ❤️ by [@tdanielou](%s)" % url_theo + ", [@dat_rohit](%s)" % url_rohit + ", [@tjaneau](%s)" % url_thibault  + ", [@rammalnour](%s)" % url_nour)
 
-    st.write("ok test")
+
  
 
 
