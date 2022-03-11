@@ -53,20 +53,14 @@ anchors = [ [[116, 90], [156, 198], [373, 326]],
 
 NUM_CLASS = 80
 
-
 global model
 global graph
 
-#graph=tf.get_default_graph()
-
-#session = tf.Session()
-#set_session(session)
 
 # create Yolo model
 @st.cache(hash_funcs={"MyUnhashableClass": lambda _: None},allow_output_mutation=True)
 def load_model():
     model = YOLOv3(Input(shape=(None, None, 3)), NUM_CLASS);    
-    #model.summary()
     # load the weights trained on COCO into the model
     WeightReader("./yolov3.weights").load_weights(model)
     return model
@@ -74,7 +68,6 @@ def load_model():
 
 
 model=load_model()
-#model._make_predict_function()
 
 
 #define labels
@@ -257,7 +250,6 @@ def try_for_one_image(image):
 #Takes the image path as an input and returns the plotted image with bounding boxes
 def detect_cars(image):
     #img=Image.open(image)
-    print("detect cars okkkk")
     img=image
     img=resizeimage.resize_contain(img, [400, 250])
     val=np.array(img,dtype=np.uint8)
@@ -270,6 +262,7 @@ def detect_cars(image):
 st.title("Detect a car")
 
 #Build the streamlit front end page
+#TODO: Return false boolean if car is not detected and build front
 def display_front():
     file_uploaded=st.file_uploader("Upload an image", type=["png","jpg","jpeg"])
     if file_uploaded is not None:
@@ -282,9 +275,7 @@ def display_front():
         with st.spinner('Wait for it... ⌛'):
 
             image = Image.open(file_uploaded)
-            print("okkkkkkkkkk")
             final_img=detect_cars(image=image)
-            print("diube OKKKKKK")  
 
         st.info("File uploaded ✅")
         

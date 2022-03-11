@@ -1,0 +1,1 @@
+web: sh setup.sh && streamlit run Project/single_image_detection.py

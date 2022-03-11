@@ -7,3 +7,14 @@ Pour tester le model :
 4- run Test_model.py 
 
 A noter que je n'ai pas encore modifier le code, beaucoup de fonctions ne servent pas, je n'ai pas encore commenté, etc... Mais voilà c'est fonctionnel. 
+
+
+
+#parties
+
+intro: projet imaginé pour le hackaton hi paris 2022 etc...
+1)explication du traitement d'image + utilisation de yolo
+2)Présentation de YOLO
+3)Présentation du site
+4)Installation locale (instructions)
+5)Approfondissements futurs
