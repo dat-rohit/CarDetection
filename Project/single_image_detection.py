@@ -29,7 +29,7 @@ from WeightsReader import WeightReader
 url_rohit="https://github.com/dat-rohit"
 url_theo="https://github.com/tdanielou"
 url_nour="https://github.com/rammalnour"
-url_thibault=""
+url_thibault="https://github.com/thibault-jauneau"
 
 fig = plt.figure(figsize=(12, 12))
 axis = fig.add_subplot()
@@ -286,7 +286,7 @@ def display_front():
         #st.write("") #ECRIRE PROBA DE PREDICTION
         
     
-    st.markdown("Developed with ❤️ by [@tdanielou](%s)" % url_theo + ", [@dat_rohit](%s)" % url_rohit + ", [@tjaneau](%s)" % url_thibault  + ", [@rammalnour](%s)" % url_nour)
+    st.markdown("Developed with ❤️ by [@tdanielou](%s)" % url_theo + ", [@dat_rohit](%s)" % url_rohit + ", [@thibault-jauneau](%s)" % url_thibault  + ", [@rammalnour](%s)" % url_nour)
 
 
  
