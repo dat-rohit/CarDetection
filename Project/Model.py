@@ -20,11 +20,9 @@ def darknet():
 def YOLOv3(input_layer, NUM_CLASS=80):
     """
     Yolov3 network. 
-
     :param input_layer:  Input layer of shape (1, 416, 416, 3)
     :param NUM_CLASS:  Should be 80 for Yolov3    
     :return:  A tensorflow.keras.models.Model object with three outputs of the Yolov3 network.
-
     """
 
     # Darknet backbone
@@ -113,7 +111,6 @@ def darknet53(x):
 def convolutional(x, K, filters, downsample=False, bn=True, layer_num=[0]):
     """
     convolutional Represents a Convolutional layer of Yolov3. This is a Conv2D followed by BatchNorm and LeakyRelu 
-
     :param x: Input layer to be used for this convolutional layer.  
     :param K: Filter shape (K,K) 
     :param filters:  Total no. of filters to be used.
@@ -176,7 +173,6 @@ def extract_features( output, anchors, S, N=3, num_classes=(80), net_wh=(416,416
     """
     ExtractFeatures takes the raw network output and extracts the bouding-box coordinates, class probabilites, and
     Objectness scores information, using the provided grid-size and anchor-boxes information.   
-
     :param output: raw network output from Yolo for a particular grid-scale.
     :param anchors: the anchor box dimensions for this grid-scale
     :param S: the grid-scale. This should be 13, 26 or 52.
