@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 Project/yolov3.weights
-
+__pycache__
 
 # C extensions
 *.so
